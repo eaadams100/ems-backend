@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: pg-ems
+    restart: always
+    environment:
+      POSTGRES_USER: kali
+      POSTGRES_PASSWORD: ieaadams100.
+      POSTGRES_DB: ems
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
