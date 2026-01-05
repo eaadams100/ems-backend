@@ -2,6 +2,7 @@ package com.adams.ems_backend.service.impl;
 
 import com.adams.ems_backend.dto.EmployeeDto;
 import com.adams.ems_backend.entity.Employee;
+import com.adams.ems_backend.exception.ResourceNotFoundException;
 import com.adams.ems_backend.mapper.EmployeeMapper;
 import com.adams.ems_backend.repository.EmployeeRepository;
 import com.adams.ems_backend.service.EmployeeService;
@@ -24,5 +25,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // now we return savedEmployees back to the client (map employee dto to employee entity)
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeId) {
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee does not exist with given ID: " + employeeId));
+
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
